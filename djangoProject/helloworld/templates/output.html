@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>抽取结果输出</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <br>
+    <h2>输入文本为：</h2>
+    <br>
+    <textarea type="text" class = "form-control input-lg">{{txt}}</textarea>
+    <br>
+    <h3>抽取结果为：</h3>
+    <br>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+        <th>企业名称</th>
+        <th>法人代表</th>
+        <th>成立时间</th>
+        <th>注册资本</th>
+        <th>公司地址</th>
+        <th>经营范围</th>
+        <th>经营期限</th>
+        <th>登记机关</th>
+        <th>股东信息</th>
+        <th>高管信息</th>
+        <th>等级状态</th>
+        <th>实收资本</th>
+        <th>邮政编码</th>
+        <th>公司网址</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for A in Data %}
+  <tr>
+      {% for data in A %}
+      <td>{{data}}</td>
+      {% endfor %}
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</body>
+</html>
