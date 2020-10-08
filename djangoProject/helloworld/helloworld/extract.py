@@ -1,3 +1,7 @@
+#coding:utf-8
+import re
+
+
 def extract(txt):
     txt_split = txt.split('#')
     A = []
@@ -39,87 +43,99 @@ def extract(txt):
         web_num = 0
         last = len(txt)
         # 获取企业名称
-        while name_num < last:
-            if txt[name_num] != '，':
-                A[i][0] = A[i][0] + txt[name_num]
-                name_num = name_num + 1
-            else:
-                break
+        temp = re.search(r'(\s?)(.{1,30})公司|(\s?)(.{1,30})企业|，(.{1,30})企业|。(.{1,30})企业|，(.{1,30})公司|。(.{1,30})公司', txt)
+        if temp != None:
+            for tp in temp.group():
+                A[i][0] = A[i][0] + tp
         print(A[i][0])
 
-        # 获取企业经营范围
-        while business_scope_num + 4 < last:
-            if txt[business_scope_num + 1:business_scope_num + 5] == '经营范围':
-                business_scope_num = business_scope_num + 5
-                while business_scope_num < last:
-                    if txt[business_scope_num] != '。':
-                        A[i][5] = A[i][5] + txt[business_scope_num]
-                        business_scope_num = business_scope_num + 1
-                    else:
-                        break
-                break
+        # 公司的主要经营范围
+        temp_scope = ''
+        if re.search(r'经营范围', txt) != None:
+            a, b = re.search(r'经营范围', txt).span()
+            while b < last:
+                if txt[b+1] != '。':
+                    temp_scope = temp_scope + txt[b]
+                    b = b + 1
+                else:
+                    break
+            temp_scope = temp_scope + txt[b+1]
+            temp_scope = temp_scope.split('：')
+            if len(temp_scope)>1:
+                for tp in temp_scope[1]:
+                    A[i][5] = A[i][5] + tp
             else:
-                business_scope_num = business_scope_num + 1
+                for tp in temp_scope[0]:
+                    A[i][5] = A[i][5] + tp
+        elif re.search(r'主要经营', txt) != None:
+            a, b = re.search(r'主要经营', txt).span()
+            while b < last:
+                if txt[b + 1] != '。':
+                    temp_scope = temp_scope + txt[b]
+                    b = b + 1
+                else:
+                    break
+            temp_scope = temp_scope + txt[b + 1]
+            temp_scope = temp_scope.split('：')
+            if len(temp_scope) > 1:
+                for tp in temp_scope[1]:
+                    A[i][5] = A[i][5] + tp
+            else:
+                for tp in temp_scope[0]:
+                    A[i][5] = A[i][5] + tp
+        elif re.search(r'授权经营', txt) != None:
+            a, b = re.search(r'授权经营', txt).span()
+            while b < last:
+                if txt[b + 1] != '。':
+                    temp_scope = temp_scope + txt[b]
+                    b = b + 1
+                else:
+                    break
+            temp_scope = temp_scope + txt[b + 1]
+            temp_scope = temp_scope.split('：')
+            if len(temp_scope) > 1:
+                for tp in temp_scope[1]:
+                    A[i][5] = A[i][5] + tp
+            else:
+                for tp in temp_scope[0]:
+                    A[i][5] = A[i][5] + tp
         print(A[i][5])
 
-        # 成立时间
-        while establish_num + 3 < last:
-            if txt[establish_num + 1:establish_num + 4] == '成立于':
-                establish_num = establish_num + 4
-                while establish_num < last:
-                    if (txt[establish_num] != '，') and (txt[establish_num] != '。'):
-                        A[i][2] = A[i][2] + txt[establish_num]
-                        establish_num = establish_num + 1
-                    else:
-                        break
-                break
-            else:
-                establish_num = establish_num + 1
+        # 公司的成立时间
+        temp = re.search(r'(\d+)年(\d+)月(\d+)日|(\d+)年(\d+)月|(\d+)年', txt)
+        if temp != None:
+            for tp in temp.group():
+                A[i][2] = A[i][2] + tp
         print(A[i][2])
 
         # 公司地址
-        while location_num + 4 < last:
-            if txt[location_num + 1:location_num + 5] == '公司地址':
-                location_num = location_num + 6
-                while location_num < last:
-                    if txt[location_num] != '，' and txt[location_num] != '。':
-                        A[i][4] = A[i][4] + txt[location_num]
-                        location_num = location_num + 1
-                    else:
-                        break
-                break
-            else:
-                location_num = location_num + 1
+        temp = re.search(r'(公司)?地址', txt)
+        if temp != None:
+            a, b = re.search(r'(公司)?地址', txt).span()
+            b = b + 2
+            while b < last:
+                if txt[b+1] != '。' and txt[b+1] != '，' and txt[b+1] != '！':
+                    A[i][4] = A[i][4] + txt[b]
+                    b = b + 1
+                else:
+                    break
+            A[i][4] = A[i][4] + txt[b+1]
         print(A[i][4])
 
         # 邮政编码
-        while postal_code_num + 4 < last:
-            if txt[postal_code_num + 1:postal_code_num + 5] == '邮政编码':
-                postal_code_num = postal_code_num + 6
-                while postal_code_num < last:
-                    if txt[postal_code_num] != '，' and txt[postal_code_num] != '。':
-                        A[i][12] = A[i][12] + txt[postal_code_num]
-                        postal_code_num = postal_code_num + 1
-                    else:
-                        break
-                break
-            else:
-                postal_code_num = postal_code_num + 1
+        temp = re.search(r'\D\d{6}\D', txt)
+        if temp != None:
+            a, b = temp.span()
+            k = a + 1
+            while k < b-1:
+                A[i][12] = A[i][12] + txt[k]
+                k = k + 1
         print(A[i][12])
 
         # 公司网址
-        while web_num + 4 < last:
-            if txt[web_num + 1:web_num + 5] == '公司网站':
-                web_num = web_num + 6
-                while web_num < last:
-                    if txt[web_num] != ',' and txt[web_num] != '。' and txt[web_num] != '；':
-                        A[i][13] = A[i][13] + txt[web_num]
-                        web_num = web_num + 1
-                    else:
-                        break
-                break
-            else:
-                web_num = web_num + 1
+        if re.search(r'http(.+)[a-zA-Z0-9]/?', txt) != None:
+            for tp in re.search(r'http(.+)[a-zA-Z0-9]/?', txt).group():
+                A[i][13] = A[i][13] + tp
         print(A[i][13])
         print(A[i])
         i = i + 1
