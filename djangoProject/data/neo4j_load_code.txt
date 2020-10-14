@@ -1,0 +1,16 @@
+导入节点命令：
+LOAD CSV WITH HEADERS FROM "file:///enterprise_node.csv" as line MERGE (z:name{name_id:line.name_id,name:line.name})
+LOAD CSV WITH HEADERS FROM "file:///scopeof.csv" AS line merge (z:scope{scope_id:line.scope_id,scope:line.scope})
+LOAD CSV WITH HEADERS FROM "file:///locationof.csv" AS line merge (z:location{location_id:line.location_id,location:line.location})
+LOAD CSV WITH HEADERS FROM "file:///establishtimeof.csv" AS line merge (z:time{time_id:line.time_id,time:line.time})
+LOAD CSV WITH HEADERS FROM "file:///webof.csv" AS line merge (z:web{web_id:line.web_id,web:line.web})
+LOAD CSV WITH HEADERS FROM "file:///codeof.csv" AS line merge (z:code{code_id:line.code_id,code:line.code}) 
+删除节点
+match (n:***) del
+
+添加关系
+LOAD CSV WITH HEADERS FROM "file:///webof.csv" AS line match (N:name{name_id:line.name_id}),(W:web{web_id:line.web_id}) merge (W)-[r:webof{relation:line.relation}]->(N)
+LOAD CSV WITH HEADERS FROM "file:///establishtimeof.csv" AS line match (N:name{name_id:line.name_id}),(T:time{time_id:line.time_id}) merge (T)-[r:timeof{relation:line.relation}]->(N)
+LOAD CSV WITH HEADERS FROM "file:///codeof.csv" AS line match (N:name{name_id:line.name_id}),(C:code{code_id:line.code_id}) merge (C)-[r:codeof{relation:line.relation}]->(N)
+LOAD CSV WITH HEADERS FROM "file:///scopeof.csv" AS line match (N:name{name_id:line.name_id}),(S:scope{scope_id:line.scope_id}) merge (S)-[r:scopeof{relation:line.relation}]->(N)
+LOAD CSV WITH HEADERS FROM "file:///locationof.csv" AS line match (N:name{name_id:line.name_id}),(L:location{location_id:line.location_id}) merge (L)-[r:locationof{relation:line.relation}]->(N)
