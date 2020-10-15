@@ -1,8 +1,8 @@
-#coding:utf-8
+# coding:utf-8
 import re
 import csv
 
-
+# 生成csv文件，包括节点文件和关系文件。
 def create_csv(A):
     path = "../../data/"
     with open(path+"enterprise_node.csv", 'w', encoding='utf-8', newline='') as file:
@@ -76,31 +76,54 @@ def create_csv(A):
             j = j + 1
 
 
-def get_name(txt, last):# 1获取公司名称
-    print("1")
+# 1获取公司名称
+def get_name(txt):
+    last = len(txt)
+    r1 = r'(\s?)(.{1,30})公司|(\s?)(.{1,30})企业|，(.{1,30})企业|。(.{1,30})企业|，(.{1,30})公司|。(.{1,30})公司'
     name = ''
-    return_name=''
-    temp = re.search(r'(\s?)(.{1,30})公司|(\s?)(.{1,30})企业|，(.{1,30})企业|。(.{1,30})企业|，(.{1,30})公司|。(.{1,30})公司', txt)
+    return_name =''
+    temp = re.search(r1, txt)
     if temp != None:
         for tp in temp.group():
             name = name + tp
     name = name.split('，')
-    return_name = name[0]
+    name = name[0]
+    # 得到的结果可能包含“武汉昱达昌实业有限公司是一家专注于“产旅城”大健康全域发展公司“，所以需要切割
+    i = 0
+    if '公司' in name:
+        tag = 1
+    elif '企业' in name:
+        tag = 2
+    if tag == 1:
+        while i < len(name):
+            return_name = return_name + name[i]
+            i = i + 1
+            if '公司' in return_name:
+                break
+    elif tag == 2:
+        while i < len(name):
+            return_name = return_name + name[i]
+            i = i + 1
+            if '企业' in return_name:
+                break
     if return_name == '':
         return_name = '*'
     return return_name
 
 
-def get_legal_representative(txt, last):# 2获取法定代表
-    print("2")
+# 2获取法定代表
+def get_legal_representative(txt):
+    last = len(txt)
+    r1 = r'法定代表人(为?)'
+    r2 = r'法人代表(为?)'
     return_representative = ''
-    if re.search(r'法定代表人(为?)', txt) != None:
-        a, b = re.search(r'法定代表人(为?)', txt).span()
+    if re.search(r1, txt) != None:
+        a, b = re.search(r1, txt).span()
         while txt[b] != '，' and txt[b] != '。':
             return_representative = return_representative + txt[b]
             b = b + 1
-    elif re.search(r'法人代表(为?)', txt) != None:
-        a, b = re.search(r'法人代表(为?)', txt).span()
+    elif re.search(r2, txt) != None:
+        a, b = re.search(r2, txt).span()
         while txt[b] != '，' and txt[b] != '。':
             return_representative = return_representative + txt[b]
             b = b + 1
@@ -108,10 +131,13 @@ def get_legal_representative(txt, last):# 2获取法定代表
         return_representative = '*'
     return return_representative
 
-def get_establish_time(txt, last):# 3获取成立时间
-    print("3")
+
+# 3获取成立时间
+def get_establish_time(txt):
+    last = len(txt)
+    r1 = r'(\d+)年(\d+)月(\d+)日|(\d+)年(\d+)月|(\d{4})年'
     return_time = ''
-    temp = re.search(r'(\d+)年(\d+)月(\d+)日|(\d+)年(\d+)月|(\d{4})年', txt)
+    temp = re.search(r1, txt)
     if temp != None:
         for tp in temp.group():
             return_time = return_time + tp
@@ -120,31 +146,36 @@ def get_establish_time(txt, last):# 3获取成立时间
     return return_time
 
 
-def get_registered_capital(txt, last):# 4注册资本
-    print("4")
+# 4注册资本
+def get_registered_capital(txt):
+    last = len(txt)
+    r1 = r'注册资本'
+    r2 = r'\d(.+)[(人民币)(美元)]'
+    r3 = r'[(一)(二)(三)(四)(五)(六)(七)(八)(九)(十)](.+)[(人民币)(美元)]'
     return_registered_capital = ''
     temp = ''
-    if re.search(r'注册资本', txt) != None:
-        a, b = re.search(r'注册资本', txt).span()
+    if re.search(r1, txt) != None:
+        a, b = re.search(r1, txt).span()
         while txt[b] != '。' and txt[b] != '，':
             temp = temp + txt[b]
             b = b + 1
-        if re.search(r'\d(.+)[(人民币)(美元)]', temp) != None:
+        if re.search(r2, temp) != None:
             return_registered_capital = return_registered_capital + temp
-        elif re.search(r'[(一)(二)(三)(四)(五)(六)(七)(八)(九)(十)](.+)[(人民币)(美元)]', temp) != None:
+        elif re.search(r3, temp) != None:
             return_registered_capital = return_registered_capital + temp
-
     if return_registered_capital == '':
         return_registered_capital = '*'
     return return_registered_capital
 
 
-def get_location_data(txt, last):# 5公司地址
-    print("5")
+# 5公司地址
+def get_location_data(txt):
+    last = len(txt)
+    r1 = r'(公司)?地址'
     return_location = ''
-    temp = re.search(r'(公司)?地址', txt)
+    temp = re.search(r1, txt)
     if temp != None:
-        a, b = re.search(r'(公司)?地址', txt).span()
+        a, b = re.search(r1, txt).span()
         b = b + 2
         while b < last:
             if txt[b + 1] != '。' and txt[b + 1] != '，' and txt[b + 1] != '！':
@@ -159,11 +190,16 @@ def get_location_data(txt, last):# 5公司地址
     return return_location
 
 
-def get_business_scope(txt, last):# 6经营范围
-    print("6")
+# 6经营范围
+def get_business_scope(txt):
+    last = len(txt)
+    r1 = r'经营范围'
+    r2 = r'主要经营'
+    r3 = r'经营范围'
+    r4 = r'主要运营'
     return_business_scope = ''
-    if re.search(r'经营范围', txt) != None:
-        a, b = re.search(r'经营范围', txt).span()
+    if re.search(r1, txt) != None:
+        a, b = re.search(r1, txt).span()
         # b = b + 1
         temp = ''
         while txt[b] != '。':
@@ -176,8 +212,8 @@ def get_business_scope(txt, last):# 6经营范围
         else:
             for tp in temp:
                 return_business_scope = return_business_scope + tp
-    elif re.search(r'主要经营', txt) != None:
-        a, b = re.search(r'主要经营', txt).span()
+    elif re.search(r2, txt) != None:
+        a, b = re.search(r2, txt).span()
         # b = b + 1
         temp = ''
         while txt[b] != '。':
@@ -190,8 +226,8 @@ def get_business_scope(txt, last):# 6经营范围
         else:
             for tp in temp:
                 return_business_scope = return_business_scope + tp
-    elif re.search(r'经营范围', txt) != None:
-        a, b = re.search(r'经营范围', txt).span()
+    elif re.search(r3, txt) != None:
+        a, b = re.search(r3, txt).span()
         # b = b + 1
         temp = ''
         while txt[b] != '。':
@@ -204,8 +240,8 @@ def get_business_scope(txt, last):# 6经营范围
         else:
             for tp in temp:
                 return_business_scope = return_business_scope + tp
-    elif re.search(r'主要运营', txt) != None:
-        a, b = re.search(r'主要运营', txt).span()
+    elif re.search(r4, txt) != None:
+        a, b = re.search(r4, txt).span()
         # b = b + 1
         temp = ''
         while txt[b] != '。':
@@ -223,34 +259,66 @@ def get_business_scope(txt, last):# 6经营范围
     return return_business_scope
 
 
-def get_operating_period():# 7经营期限
-    print("7")
+# 7经营期限
+def get_operating_period(txt):
+    last = len(txt)
+    r1 = r''
+    return_operating_period = ''
+
+    return return_operating_period
 
 
-def get_registered_authority():# 8登记机关
-    print("8")
+# 8登记机关
+def get_registered_authority(txt):
+    last = len(txt)
+    r1 = r''
+    return_registered_authority = ''
+
+    return return_registered_authority
 
 
-def get_sharehold_information():# 9股东信息
-    print("9")
+# 9股东信息
+def get_sharehold_information(txt):
+    last = len(txt)
+    r1 = r''
+    return_sharehold_information = ''
+
+    return return_sharehold_information
 
 
-def get_executive_information():# 10高管信息
-    print("10")
+# 10高管信息
+def get_executive_information(txt):
+    last = len(txt)
+    r1 = r''
+    return_executive_information = ''
+
+    return return_executive_information
 
 
-def get_registered_statement():# 11登记状态
-    print("11")
+# 11登记状态
+def get_registered_statement(txt):
+    last = len(txt)
+    r1 = r''
+    return_registered_statement = ''
+
+    return return_registered_statement
 
 
-def get_capital():# 12实收资本
-    print("12")
+# 12实收资本
+def get_capital(txt):
+    last = len(txt)
+    r1 = r''
+    return_capital = ''
+
+    return return_capital
 
 
-def get_postal_code(txt, last):# 13邮政编码
-    print("13")
+# 13邮政编码
+def get_postal_code(txt):
+    last = len(txt)
+    r1 = r'\D\d{6}\D'
     return_postal_code = ''
-    temp = re.search(r'\D\d{6}\D', txt)
+    temp = re.search(r1, txt)
     if temp != None:
         a, b = temp.span()
         k = a + 1
@@ -262,20 +330,24 @@ def get_postal_code(txt, last):# 13邮政编码
     return return_postal_code
 
 
-def get_web_data(txt ,last):# 14公司网址
-    print("14")
+# 14公司网址
+def get_web_data(txt):
+    last = len(txt)
+    r1 = r'http(.+)[a-zA-Z0-9](\/?)'
+    r2 = r'www(.+)[a-zA-Z0-9](\/?)'
     return_web_data = ''
-    if re.search(r'http(.+)[a-zA-Z0-9](\/?)', txt) != None:
-        for tp in re.search(r'http(.+)[a-zA-Z0-9]/?', txt).group():
+    if re.search(r1, txt) != None:
+        for tp in re.search(r1, txt).group():
             return_web_data = return_web_data + tp
-    elif re.search(r'www(.+)[a-zA-Z0-9](\/?)', txt) != None:
-        for tp in re.search(r'www(.+)[a-zA-Z0-9](\/?)', txt).group():
+    elif re.search(r2, txt) != None:
+        for tp in re.search(r2, txt).group():
             return_web_data = return_web_data + tp
     if return_web_data == '':
         return_web_data = '*'
     return return_web_data
 
 
+# 总的抽取函数
 def extract(txt):
     txt_split = txt.split('#')
     A = []
@@ -288,58 +360,47 @@ def extract(txt):
     i = 0
     print(txt)
     for txt in txt_split:
-        # 公司名称
-        name_num = 0
-        # 法定代表人
-        legal_representative_num = 0
-        # 成立时间
-        establish_num = 0
-        # 注册资本
-        registered_capital_num = 0
-        # 公司地址
-        location_num = 0
-        # 经营范围
-        business_scope_num = 0
-        # 经营期限
-        operating_period_num = 0
-        # 登记机关
-        registered_authority_num = 0
-        # 股东信息
-        shareholder_information_num = 0
-        # 高管信息
-        executive_information_num = 0
-        # 登记状态
-        registered_statement_num = 0
-        # 实收资本
-        get_capital_num = 0
-        # 邮政编码
-        postal_code_num = 0
-        # 公司网址
-        web_num = 0
-        last = len(txt)
         # 获取企业名称
-        A[i][0] = get_name(txt, last)
+        A[i][0] = get_name(txt)
         print(A[i][0])
         # 法人代表
-        A[i][1] = get_legal_representative(txt, last)
+        A[i][1] = get_legal_representative(txt)
         print(A[i][1])
         # 公司的成立时间
-        A[i][2] = get_establish_time(txt, last)
+        A[i][2] = get_establish_time(txt)
         print(A[i][2])
         # 注册资本
-        A[i][3] = get_registered_capital(txt ,last)
+        A[i][3] = get_registered_capital(txt)
         print(A[i][3])
         # 公司地址
-        A[i][4] = get_location_data(txt, last)
+        A[i][4] = get_location_data(txt)
         print(A[i][4])
         # 公司的主要经营范围
-        A[i][5] = get_business_scope(txt, last)
+        A[i][5] = get_business_scope(txt)
         print(A[i][5])
+        # 经营期限
+        A[i][6] = get_operating_period(txt)
+        print(A[i][6])
+        # 登记机关
+        A[i][7] = get_registered_authority(txt)
+        print(A[i][7])
+        # 股东信息
+        A[i][8] = get_sharehold_information(txt)
+        print(A[i][8])
+        # 高管信息
+        A[i][9] = get_executive_information(txt)
+        print(A[i][9])
+        # 登记状态
+        A[i][10] = get_registered_statement(txt)
+        print(A[i][10])
+        # 实收资本
+        A[i][11] = get_capital(txt)
+        print(A[i][11])
         # 邮政编码
-        A[i][12] = get_postal_code(txt, last)
+        A[i][12] = get_postal_code(txt)
         print(A[i][12])
         # 公司网址
-        A[i][13] = get_web_data(txt, last)
+        A[i][13] = get_web_data(txt)
         print(A[i][13])
         print(A[i])
         i = i + 1
