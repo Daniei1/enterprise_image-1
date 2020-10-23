@@ -8,17 +8,24 @@
 	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div class = "container">
-             <h2 class="text-center">输入文本进行抽取</h2>
-             <form action="/search" method="get">
-                <div class = "form-group text-center">
-                   <textarea type="text" class = "form-control input-lg" name="q"></textarea>
-                    <br>
-                    <span class="input-group-btn">
-                        <input class="btn btn-primary btn-block" type="submit" id="button" value="抽取">
-                    </span>
-                </div>
-             </form>
+    <div class="container">
+        <h3 class="text-center">您打算文字输入公司简介还是上传文本(.txt)读取？</h3>
+        <h3>文字输入抽取</h3>
+        <div class = "form-group text-center">
+            <form action="/search/" method="POST">
+                <textarea type="text" class = "form-control input-lg" name="q"></textarea>
+                <br>
+                <span class="input-group-btn">
+                    <input class="btn btn-primary btn-block" type="submit" id="button" value="文字抽取">
+                </span>
+            </form>
+        </div><br><br>
+        <h3>文件上传抽取</h3>
+        <form enctype="multipart/form-data" action="/search/" method="post">
+           <input type="file" name="myfile" />
+            <br>
+           <input class="btn btn-primary btn-block" type="submit" value="txt文件抽取">
+        </form>
     </div>
 </body>
 </html>

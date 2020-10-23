@@ -1,11 +1,32 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>输入文本页</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
 <body>
-    <script type="text/python">
-        from browser import document
-        from browser.html import A,B
+    <div class = "container">
+             <h2 class="text-center">输入文本进行抽取</h2>
+             <form action="/search/" method="POST">
+                 您打算文字输入公司简介还是上传文本读取？<br/>
+                 <label><input name="get_type" type="radio" value="1">文字输入</label>
+                 <label><input name="get_type" type="radio" value="2">上传文本</label>
 
-        document <= B("Brython")+"is an implementation of "
-        document <= A("Python",href="http://www.python.org")+" for web browsers"
-    </script>
+                <div class = "form-group text-center">
+                    <textarea type="text" class = "form-control input-lg" name="q"></textarea>
+                    <br>
+                    <form action="/search/" enctype="multipart/form-data" method="post">
+                        <input type="file" name="txt">
+                    <br>
+                    <span class="input-group-btn">
+                        <input class="btn btn-primary btn-block" type="submit" id="button" value="抽取">
+                    </span>
+                    </form>
+                </div>
+             </form>
+    </div>
 </body>
 </html>

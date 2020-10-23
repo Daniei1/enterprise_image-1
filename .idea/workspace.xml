@@ -7,6 +7,13 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -17,9 +24,10 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../django_test" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.test">
     <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="enterprise_image" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -41,9 +49,31 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="try" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="enterprise_image" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/djangoProject/helloworld/helloworld" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/djangoProject/helloworld/helloworld/try.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Python.test" />
+        <item itemvalue="Python.try" />
       </list>
     </recent_temporary>
   </component>
@@ -59,25 +89,42 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1899" height="296" key="GridCell.Tab.0.bottom" timestamp="1602729235958">
+    <state x="628" y="445" key="FileChooserDialogImpl" timestamp="1603277787324">
+      <screen x="0" y="0" width="1920" height="1049" />
+    </state>
+    <state x="628" y="445" key="FileChooserDialogImpl/0.0.1920.1049/-1680.36.1680.1020@0.0.1920.1049" timestamp="1603277787324" />
+    <state width="1899" height="262" key="GridCell.Tab.0.bottom" timestamp="1603276250993">
+      <screen x="0" y="0" width="1920" height="1049" />
+    </state>
+    <state width="1899" height="333" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1602927229477" />
+    <state width="1899" height="262" key="GridCell.Tab.0.bottom/0.0.1920.1049/-1680.36.1680.1020@0.0.1920.1049" timestamp="1603276250993" />
+    <state width="1899" height="262" key="GridCell.Tab.0.center" timestamp="1603276250993">
+      <screen x="0" y="0" width="1920" height="1049" />
+    </state>
+    <state width="1899" height="333" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1602927229477" />
+    <state width="1899" height="262" key="GridCell.Tab.0.center/0.0.1920.1049/-1680.36.1680.1020@0.0.1920.1049" timestamp="1603276250993" />
+    <state width="1899" height="262" key="GridCell.Tab.0.left" timestamp="1603276250993">
+      <screen x="0" y="0" width="1920" height="1049" />
+    </state>
+    <state width="1899" height="333" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1602927229476" />
+    <state width="1899" height="262" key="GridCell.Tab.0.left/0.0.1920.1049/-1680.36.1680.1020@0.0.1920.1049" timestamp="1603276250993" />
+    <state width="1899" height="262" key="GridCell.Tab.0.right" timestamp="1603276250993">
+      <screen x="0" y="0" width="1920" height="1049" />
+    </state>
+    <state width="1899" height="333" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1602927229477" />
+    <state width="1899" height="262" key="GridCell.Tab.0.right/0.0.1920.1049/-1680.36.1680.1020@0.0.1920.1049" timestamp="1603276250993" />
+    <state x="860" y="196" key="SettingsEditor" timestamp="1602925439936">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="296" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1602729235958" />
-    <state width="1899" height="296" key="GridCell.Tab.0.center" timestamp="1602729235957">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="860" y="196" key="SettingsEditor/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1602925439936" />
+    <state x="-1680" y="36" width="1663" height="911" key="dock-window-1" timestamp="1603453929229">
+      <screen x="-1680" y="36" width="1680" height="1020" />
     </state>
-    <state width="1899" height="296" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1602729235957" />
-    <state width="1899" height="296" key="GridCell.Tab.0.left" timestamp="1602729235957">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="-1680" y="36" width="1663" height="911" key="dock-window-1/0.0.1920.1049/-1680.36.1680.1020@0.0.1920.1049" timestamp="1603453929229" />
+    <state x="818" y="364" width="672" height="684" key="search.everywhere.popup" timestamp="1603329433413">
+      <screen x="0" y="0" width="1920" height="1049" />
     </state>
-    <state width="1899" height="296" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1602729235957" />
-    <state width="1899" height="296" key="GridCell.Tab.0.right" timestamp="1602729235957">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1899" height="296" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1602729235957" />
-    <state x="818" y="361" width="672" height="678" key="search.everywhere.popup" timestamp="1602127317569">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="818" y="361" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1602127317569" />
+    <state x="818" y="361" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/1920.0.1680.1010@0.0.1920.1040" timestamp="1602916525413" />
+    <state x="818" y="364" width="672" height="684" key="search.everywhere.popup/0.0.1920.1049/-1680.36.1680.1020@0.0.1920.1049" timestamp="1603329433413" />
   </component>
 </project>

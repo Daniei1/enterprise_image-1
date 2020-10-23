@@ -18,27 +18,31 @@
 <table class="table table-bordered">
   <thead>
     <tr>
-        <th>企业名称</th>
-        <th>法人代表</th>
-        <th>成立时间</th>
-        <th>注册资本</th>
-        <th>公司地址</th>
-        <th>经营范围</th>
-        <th>经营期限</th>
-        <th>登记机关</th>
-        <th>股东信息</th>
-        <th>高管信息</th>
-        <th>等级状态</th>
-        <th>实收资本</th>
-        <th>邮政编码</th>
-        <th>公司网址</th>
+        <th bgcolor="#9999FF" style="width:10%">企业名称</th>
+        <th bgcolor="#9999FF" style="width:5%">法人代表</th>
+        <th bgcolor="#9999FF" style="width:5%">成立时间</th>
+        <th bgcolor="#9999FF" style="width:5%">注册资本</th>
+        <th bgcolor="#9999FF" style="width:10%">公司地址</th>
+        <th bgcolor="#9999FF" style="width:22%">经营范围</th>
+        <th bgcolor="#9999FF" style="width:5%">经营期限</th>
+        <th bgcolor="#9999FF" style="width:5%">登记机关</th>
+        <th bgcolor="#9999FF" style="width:5%">股东信息</th>
+        <th bgcolor="#9999FF" style="width:5%">高管信息</th>
+        <th bgcolor="#9999FF" style="width:5%">等级状态</th>
+        <th bgcolor="#9999FF" style="width:5%">实收资本</th>
+        <th bgcolor="#9999FF" style="width:5%">邮政编码</th>
+        <th bgcolor="#9999FF" style="width:8%">公司网址</th>
     </tr>
   </thead>
   <tbody>
   {% for A in Data %}
   <tr>
       {% for data in A %}
-      <td>{{data}}</td>
+        {% if data == '' %}
+            <td bgcolor="#FFFFFF">{{data}}</td>
+        {% else %}
+            <td bgcolor="#d0d0d0">{{data}}</td>
+        {% endif %}
       {% endfor %}
   </tr>
   {% endfor %}
